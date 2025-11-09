@@ -1,0 +1,7 @@
+organization=himanshu0ic7
+projectKey=himanshu0ic7_SonarQube-Maven
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.76401
+dashboardUrl=https://sonarcloud.io/dashboard?id=himanshu0ic7_SonarQube-Maven
+ceTaskId=AZpnulpbde2smo2_1RsK
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZpnulpbde2smo2_1RsK

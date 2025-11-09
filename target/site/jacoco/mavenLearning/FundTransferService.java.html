@@ -5,42 +5,42 @@ public class FundTransferService {
 
     private final AccountService accountService;
 
-<span class="nc" id="L8">    public FundTransferService(AccountService accountService) {</span>
-<span class="nc" id="L9">        this.accountService = accountService;</span>
-<span class="nc" id="L10">    }</span>
+<span class="fc" id="L8">    public FundTransferService(AccountService accountService) {</span>
+<span class="fc" id="L9">        this.accountService = accountService;</span>
+<span class="fc" id="L10">    }</span>
 
     public String transfer(String fromAccount, String toAccount, double amount) {
 
         // Validation 1: Amount check
-<span class="nc bnc" id="L15" title="All 2 branches missed.">        if (amount &lt;= 0) {</span>
-<span class="nc" id="L16">            return &quot;FAILURE: Invalid amount&quot;;</span>
+<span class="fc bfc" id="L15" title="All 2 branches covered.">        if (amount &lt;= 0) {</span>
+<span class="fc" id="L16">            return &quot;FAILURE: Invalid amount&quot;;</span>
         }
 
         // Validation 2: Same account check
-<span class="nc bnc" id="L20" title="All 2 branches missed.">        if (fromAccount.equals(toAccount)) {</span>
-<span class="nc" id="L21">            return &quot;FAILURE: Source and destination cannot be same&quot;;</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        if (fromAccount.equals(toAccount)) {</span>
+<span class="fc" id="L21">            return &quot;FAILURE: Source and destination cannot be same&quot;;</span>
         }
 
         // Validation 3: Check source account balance
-<span class="nc" id="L25">        double fromBalance = accountService.getBalance(fromAccount);</span>
-<span class="nc bnc" id="L26" title="All 2 branches missed.">        if (fromBalance &lt; amount) {</span>
-<span class="nc" id="L27">            return &quot;FAILURE: Insufficient funds&quot;;</span>
+<span class="fc" id="L25">        double fromBalance = accountService.getBalance(fromAccount);</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if (fromBalance &lt; amount) {</span>
+<span class="fc" id="L27">            return &quot;FAILURE: Insufficient funds&quot;;</span>
         }
 
         // Validation 4: Check if destination account exists
-<span class="nc bnc" id="L31" title="All 2 branches missed.">        if (!accountService.exists(toAccount)) {</span>
-<span class="nc" id="L32">            return &quot;FAILURE: Destination account not found&quot;;</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (!accountService.exists(toAccount)) {</span>
+<span class="fc" id="L32">            return &quot;FAILURE: Destination account not found&quot;;</span>
         }
 
         // Process the transfer
-<span class="nc" id="L36">        boolean debitSuccess = accountService.debit(fromAccount, amount);</span>
-<span class="nc" id="L37">        boolean creditSuccess = accountService.credit(toAccount, amount);</span>
+<span class="fc" id="L36">        boolean debitSuccess = accountService.debit(fromAccount, amount);</span>
+<span class="fc" id="L37">        boolean creditSuccess = accountService.credit(toAccount, amount);</span>
 
         // Validation 5: Check transaction success
-<span class="nc bnc" id="L40" title="All 4 branches missed.">        if (debitSuccess &amp;&amp; creditSuccess) {</span>
-<span class="nc" id="L41">            return &quot;SUCCESS: Transfer completed&quot;;</span>
+<span class="pc bpc" id="L40" title="1 of 4 branches missed.">        if (debitSuccess &amp;&amp; creditSuccess) {</span>
+<span class="fc" id="L41">            return &quot;SUCCESS: Transfer completed&quot;;</span>
         } else {
-<span class="nc" id="L43">            return &quot;FAILURE: Transaction error&quot;;</span>
+<span class="fc" id="L43">            return &quot;FAILURE: Transaction error&quot;;</span>
         }
     }
 }
