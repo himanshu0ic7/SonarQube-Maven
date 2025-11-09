@@ -1,0 +1,49 @@
+stages:
+  - build
+  - test
+  - codereview
+  - package
+
+image: maven:3.9.8-eclipse-temurin-17
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+cache:
+  paths:
+    - .m2/repository
+
+build-job:
+  stage: build
+  script:
+    - echo "🏗️ Building project..."
+    - mvn clean compile
+
+test-job:
+  stage: test
+  script:
+    - echo "🧪 Running tests..."
+    - mvn test
+
+codereview-job:
+  stage: codereview
+  script:
+    - echo "🔍 Running SonarCloud analysis..."
+    - mvn clean verify sonar:sonar \
+        -Dsonar.projectKey=	SonarQube-Maven \
+        -Dsonar.organization=himanshu0ic7 \
+        -Dsonar.host.url=https://sonarcloud.io \
+        -Dsonar.login=$SONAR_TOKEN
+  only:
+    - main
+    - merge_requests
+
+package-job:
+  stage: package
+  script:
+    - echo "📦 Packaging application..."
+    - mvn package
+  artifacts:
+    paths:
+      - target/*.jar
+    expire_in: 1 week
